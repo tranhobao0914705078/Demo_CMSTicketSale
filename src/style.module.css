@@ -31,3 +31,9 @@
 .inputUpdate{
     margin: 0 10px;
 }
+
+.img{
+    margin: 10px 10px;
+    object-fit: cover;
+    width: 100px;
+}

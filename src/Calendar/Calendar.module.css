@@ -1,0 +1,108 @@
+.PickerWrapper{
+    width: 340px;
+    height: 400px;
+    position: absolute;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    z-index: 999;
+}
+
+.Header{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    width: 200px;
+    margin: 0 20px;
+}
+
+.Header p {
+    flex: 1 0 0;
+    margin: 10px 0;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    color: #23221F;
+}
+
+.weekView{
+  background-color: red;  
+}
+
+.selectDate{
+    width: 300px;
+    margin: 0 20px;
+    height: 30px;
+    border: 1px solid #000;
+}
+
+.selectRadio{
+    display: flex;
+    justify-content: space-between;
+}
+
+.selectDateRadio{
+    display: flex;
+    margin: 0 20px;
+}
+
+.selectDateRadio input{
+    background: #000;
+}
+
+.selectDateRadio p{
+    margin: 10px 10px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.015em;
+    color: #1E0D03;
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.bodyCalendar{
+    margin: 0 10px;
+}
+
+.dayCalendar{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day{
+    font-weight: bold;
+    color: #FF9138;
+}
+
+.titleDay{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #535261;
+    cursor: pointer;
+}
+
+.active{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 5px;
+    width: 34px;
+    height: 20px;
+    border: 1px solid rgb(243, 16, 16);
+}
+
+.currentDate{
+    border: 1px solid rgb(243, 16, 16);
+}

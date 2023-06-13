@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Tippy from '@tippyjs/react/headless';
 import {db, app} from './firebase'
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc } from "firebase/firestore"; 
 import { reducerItems, State } from "./reducer";
-import { Link, useParams } from 'react-router-dom';
 import styles from './style.module.css';
 import { CSVLink } from 'react-csv';
+import  UpdateDataBase  from './update/update';
+import img from './test.svg';
+import avatar from './avatar.svg'
+import { CalendarCustom } from './Calendar/CalendarCustom';
 
 function App() {
   // const [items, setItems] = useState<any>([]);
@@ -27,11 +28,13 @@ function App() {
 
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState<{ id: string }[]>([]);
-  const [inputValueUpdate, setInputValueUpdate] = useState("");
-  const [currentItemId, setCurrentItemId] = useState("");
+  const [currentItemIdUpdate, setCurrentItemId] = useState("");
   const [state, dispatch] = useReducer(reducerItems, { data: [] } as State);
   const [isBoxVisible, setIsBoxVisible] = useState(false);
   const [clickCount, setClickCount] = useState(0);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [test, setTest] = useState("");
+
   const db = getFirestore(app);
   useEffect(() => {
     const fetchData = async () => {
@@ -67,41 +70,33 @@ function App() {
     }
   };
 
-  const handleUpdate = async (id: string, newName: string) => {
-    const itemRef = doc(db, "items", id);
-    await updateDoc(itemRef, {name: newName});
-
-    const updatedDoc = state.data.map((item) =>{
-      if(item.id === id){
-        return { ...item, name: newName};
-      }
-      return item;
-    })
-    dispatch({ type: "SET_DATA", payload: updatedDoc }); 
-    alert("Success!");
-    setIsBoxVisible(false);
-  }
   const headers = [
     { label: 'Name', key: 'name' },
-    { label: 'id', key: 'id' },
+    { label: 'id', key: 'name' },
   ];
+
+  const handleAlert = () => {
+    alert("okeee")
+  }
+
+  
   
   return (
     <div className={isBoxVisible ? `${styles.container} ${styles.overlay}` : `${styles.container}`}>
+      <img src={img} alt="img" className={styles.img}/>
+      <img src={avatar} alt="img" className={styles.img}/>
       <ul>
         {state.data.map((item, index) =>
           <>
-            <li key={index}>{item.name}</li>
             <li key={index}>{item.id}</li>
+            <li>{item.name}</li>
+            <li>{item.status === 1 ? "Okeee" : <button onClick={handleAlert}>:</button>}</li>
             <button onClick={() => handleClick(item.id)}>Update1</button>
           </>
         )}
       </ul>
       {isBoxVisible && 
-        <div className={`${styles.box} ${styles.visible}`}>
-            <input type="text" className={styles.inputUpdate} onChange={(e) => setInputValueUpdate(e.target.value)}/>
-            <button onClick={() => handleUpdate(currentItemId, inputValueUpdate)}>Update</button>
-        </div>
+        <UpdateDataBase currentItemIdUpdate={currentItemIdUpdate}/>
       }
       <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
       <button onClick={handleAddItem}>Add</button>  
@@ -110,6 +105,10 @@ function App() {
           Export CSV
         </CSVLink>
       </>
+      <div>
+        <p>{selectedDate}</p>
+        <CalendarCustom className='calendar' onSelectDate={setSelectedDate}/>
+      </div>
     </div>
   );
 }
